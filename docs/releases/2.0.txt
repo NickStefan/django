@@ -261,6 +261,9 @@ Models
 
 * The new ``field_name`` parameter of :meth:`.QuerySet.in_bulk` allows fetching
   results based on any unique model field.
+* The ``on_delete`` argument for ``ForeignKey`` and ``OneToOneField`` now accepts
+  DB_CASCADE. This will behave like DO_NOTHING in Django, but leverage
+  ON DELETE CASCADE, via an SQL constraint.
 
 Requests and Responses
 ~~~~~~~~~~~~~~~~~~~~~~

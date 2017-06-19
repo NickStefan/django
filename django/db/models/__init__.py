@@ -3,7 +3,8 @@ from django.db.models import signals
 from django.db.models.aggregates import *  # NOQA
 from django.db.models.aggregates import __all__ as aggregates_all
 from django.db.models.deletion import (
-    CASCADE, DO_NOTHING, PROTECT, SET, SET_DEFAULT, SET_NULL, ProtectedError,
+    CASCADE, DB_CASCADE, DO_NOTHING, PROTECT, SET, SET_DEFAULT, SET_NULL,
+    OnDelete, ProtectedError,
 )
 from django.db.models.expressions import (
     Case, Exists, Expression, ExpressionWrapper, F, Func, OuterRef, Subquery,
@@ -63,7 +64,8 @@ __all__ = aggregates_all + fields_all + indexes_all
 __all__ += [
     'ObjectDoesNotExist', 'signals',
     'CASCADE', 'DO_NOTHING', 'PROTECT', 'SET', 'SET_DEFAULT', 'SET_NULL',
-    'ProtectedError',
+    'DB_CASCADE',
+    'OnDelete', 'ProtectedError',
     'Case', 'Exists', 'Expression', 'ExpressionWrapper', 'F', 'Func',
     'OuterRef', 'Subquery', 'Value', 'When',
     'FileField', 'ImageField', 'OrderWrt', 'Lookup', 'Transform', 'Manager',

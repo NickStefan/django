@@ -127,3 +127,11 @@ class Base(models.Model):
 
 class RelToBase(models.Model):
     base = models.ForeignKey(Base, models.DO_NOTHING)
+
+
+class BaseDbCascade(models.Model):
+    pass
+
+
+class RelToBaseDbCascade(models.Model):
+    base = models.ForeignKey(BaseDbCascade, models.DB_CASCADE)
