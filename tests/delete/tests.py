@@ -88,6 +88,21 @@ class OnDeleteTests(TestCase):
             b.delete()
         self.assertEqual(Base.objects.count(), 0)
 
+    def test_db_cascade(self):
+        a = create_a('db_cascade')
+        a.db_cascade.delete()
+        self.assertFalse(A.objects.filter(name='db_cascade').exists())
+
+    def test_db_cascade_qscount(self):
+        """
+        A models.DB_CASCADE relation doesn't trigger a query
+        """
+        b = Base.objects.create()
+        with self.assertNumQueries(1):
+            # RelToBase should not be queried.
+            b.delete()
+        self.assertEqual(Base.objects.count(), 0)
+
     def test_inheritance_cascade_up(self):
         child = RChild.objects.create()
         child.delete()
