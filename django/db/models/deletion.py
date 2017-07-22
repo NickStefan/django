@@ -18,6 +18,8 @@ class OnDelete(object):
         self.name = name
         self.operation = operation
         self.value = value
+        if not self.with_db and not callable(self.operation):
+            raise TypeError('operation should be callable')
 
     def __call__(self, *args, **kwargs):
         return self.operation(*args, **kwargs)
@@ -68,6 +70,11 @@ SET_DEFAULT = OnDelete('SET_DEFAULT', application_set_default)
 
 class DatabaseOnDelete(OnDelete):
     with_db = True
+
+    def __init__(self, *args, **kwargs):
+        super(DatabaseOnDelete, self).__init__(*args, **kwargs)
+        if self.with_db and callable(self.operation):
+            raise TypeError('operation should be a string')
 
     def __call__(self, collector, field, sub_objs, using):
         pass
