@@ -264,6 +264,7 @@ class BaseDatabaseSchemaEditor:
                     definition += " " + self.sql_create_inline_fk % {
                         "to_table": self.quote_name(to_table),
                         "to_column": self.quote_name(to_column),
+                        "on_delete": self._create_on_delete_sql(model, field, None)
                     }
                 elif self.connection.features.supports_foreign_keys:
                     self.deferred_sql.append(self._create_fk_sql(model, field, "_fk_%(to_table)s_%(to_column)s"))
@@ -952,7 +953,7 @@ class BaseDatabaseSchemaEditor:
         }
 
     def _create_on_delete_sql(self, model, field, suffix):
-        on_delete = getattr(field.remote_field, 'on_delete', False)
+        on_delete = getattr(field.remote_field, 'on_delete', None)
         if on_delete and on_delete.with_db:
             return on_delete.as_sql(self.connection)
         else:
